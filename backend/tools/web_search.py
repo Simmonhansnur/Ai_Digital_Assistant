@@ -1,15 +1,22 @@
-from duckduckgo_search import DDGS
+from ddgs import DDGS
+
 
 def search_web(query):
 
     results = []
 
-    with DDGS() as ddgs:
-        for r in ddgs.text(query, max_results=5):
-            results.append({
-                "title": r["title"],
-                "link": r["href"],
-                "snippet": r["body"]
-            })
+    try:
+        with DDGS() as ddgs:
+            search_results = ddgs.text(query, max_results=5)
+
+            for r in search_results:
+                results.append({
+                    "title": r["title"],
+                    "link": r["href"],
+                    "snippet": r["body"]
+                })
+
+    except Exception as e:
+        print("Search error:", e)
 
     return results

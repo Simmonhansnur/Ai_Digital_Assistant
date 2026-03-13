@@ -10,6 +10,7 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 def research_agent(query):
 
     search_results = search_web(query)
+    print("SEARCH RESULTS:", search_results)
 
     context = ""
 
