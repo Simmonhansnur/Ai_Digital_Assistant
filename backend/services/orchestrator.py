@@ -1,15 +1,17 @@
 import json
 import re
 
+from agents.research_agent import research_agent
+
+
 def execute_plan(plan):
 
     results = []
 
-    # extract JSON from LLM output
     json_match = re.search(r'\[.*\]', plan, re.DOTALL)
 
     if not json_match:
-        return {"error": "No JSON plan found from planner"}
+        return {"error": "No JSON plan found"}
 
     json_string = json_match.group()
 
@@ -23,12 +25,20 @@ def execute_plan(plan):
         agent = task.get("agent")
         description = task.get("task")
 
-        result = {
+        if agent == "research_agent":
+
+            agent_result = research_agent(description)
+
+        else:
+
+            agent_result = {
+                "message": f"{agent} not implemented yet"
+            }
+
+        results.append({
             "agent": agent,
             "task": description,
-            "result": f"{agent} executed task: {description}"
-        }
-
-        results.append(result)
+            "result": agent_result
+        })
 
     return results

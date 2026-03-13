@@ -12,14 +12,12 @@ def planner_agent(user_message: str):
     planner_prompt = f"""
 You are an AI planning agent.
 
-Your job is to break the user request into subtasks.
-
 Available agents:
-- document_agent (handles document summarization and document Q&A)
-- research_agent (performs web research)
-- task_agent (creates task lists)
+- research_agent (web research)
 
-Return the result as JSON list.
+Only use the available agents.
+
+Return ONLY a JSON list.
 
 User request:
 {user_message}
